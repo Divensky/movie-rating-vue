@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.base-button {
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+.base-button:hover,
+.base-button:focus,
+.base-button:active {
+  filter: invert(1);
+  mix-blend-mode: difference;
+}
