@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 import { items } from './movies.json';
 /*
@@ -7,6 +7,7 @@ import { items } from './movies.json';
 */
 import { StarIcon } from '@heroicons/vue/24/solid';
 import NewMovie from './components/NewMovie.vue';
+import Movie from './utils/validate';
 
 const moviesWithUserRating = items.map((item) => ({
   ...item,
@@ -27,21 +28,25 @@ const hasRating = (rating, userRating) => rating || userRating;
 
 const openModal = ref(false);
 
-const addMovie = () => {
+const open = () => {
   openModal.value = !openModal.value;
-  console.log('clicked add movie', openModal.value);
 };
 
 const hideModal = () => (openModal.value = false);
+
+const addMovie = (movie) => {
+  movies.value.push(movie);
+};
 </script>
 
 <template>
   <div class="container">
-    <button class="base-button add-movie" @click="addMovie">Add Movie</button>
+    <button class="base-button add-movie" @click="open">Add Movie</button>
     <NewMovie
       v-show="openModal"
       v-model:open-modal="openModal"
       @cancel="hideModal"
+      @add-movie="addMovie"
     ></NewMovie>
     <div class="movies">
       <div v-for="item in movies" :key="item.id" class="movies__item">
